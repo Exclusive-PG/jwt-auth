@@ -16,7 +16,7 @@ class UserService{
         const activationLink = uuid.v4()
 
         const user = await UserModel.create({email, password: hashPassword, activationLink}) 
-        await mailService.sendActivationMail(email, activationLink)
+        await mailService.sendActivationMail(email, `${process.env.SERVICE_URL}/api/activation/${activationLink}`)
         
         const userDTO = new UserDTO(user)// id, email, isActivated
         const tokens = tokenService.generateTokens({...userDTO})
@@ -25,6 +25,17 @@ class UserService{
         
         return {...tokens, user: userDTO}
     }
+
+    async activate(activationLink){
+        console.log(activationLink)
+        const user = await UserModel.findOne({activationLink})
+        if(!user){
+            throw new Error(`Current user does not exist`);
+        }
+        user.isActivated = true
+        await user.save()
+    }
+
 }
 
 module.exports = new UserService();
