@@ -4,10 +4,10 @@ class MailService{
 
     constructor(){
         this.transporter = mailer.createTransport({
-            service: "gmail",
+            service: process.env.SMTP_SERVICE,
             auth:{
-                user:"exclusive.dev.service@gmail.com",
-                pass: "gtflzlrvxyvsziqb"
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASSWORD
             }
         })
     }
