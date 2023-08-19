@@ -15,7 +15,7 @@ class MailService{
     async sendActivationMail(to, link){
 
         await this.transporter.sendMail({
-            from: "exclusive.dev.service@gmail.com",
+            from: "ExclusiveDevService",
             to,
             subject: `Activation account on ${process.env.SERVICE_URL}`,
             text: "",
