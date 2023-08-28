@@ -79,6 +79,7 @@ class UserService {
 
     if (!userData || !tokenFromDb) {
       throw ApiError.UnauthorizedError();
+     // throw ApiError.BadRequestError(refreshToken)
     }
     const user = await UserModel.findById(userData.id)
     const userDTO = new UserDTO(user); // id, email, isActivated
